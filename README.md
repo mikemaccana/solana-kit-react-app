@@ -4,10 +4,13 @@ This is an example of how to use `@solana/kit` and `@solana/react` to build a Re
 
 It allows you to connect a React app to a Solana wallet. It replace wallet adapter.
 
-It is based on `@solana/example-react-app` wuth the following changes:
+> [!NOTE]  
+> If you want to use @solana/kit in a React app, this is the repo you want.
 
-- Turned into a working standalone example repository using `npm` with all custom tools removed (no pnpm, no lerna, no turbopack, no custom eslint config).
-- Security warnings fixed.
+It is based on `@solana/example-react-app` with the following changes:
+
+- Turned into a **working standalone example repository** using `npm` with all custom tools removed (no pnpm, no lerna, no turbopack, no custom eslint config).
+- Security warnings re: `process.env` fixed.
 
 ## Features
 

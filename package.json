@@ -1,7 +1,7 @@
 {
-    "name": "@solana/example-react-app",
-    "private": true,
-    "version": "0.0.0",
+    "name": "solana-kit-react-app",
+    "private": false,
+    "version": "1.0.0",
     "type": "module",
     "scripts": {
         "dev": "vite",
