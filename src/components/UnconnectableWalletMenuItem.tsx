@@ -27,7 +27,11 @@ export function UnconnectableWalletMenuItem({ error, wallet }: Props) {
                 </Box>
             </DropdownMenu.Item>
             {dialogIsOpen ? (
-                <ErrorDialog error={error} onClose={() => setDialogIsOpen(false)} title="Unconnectable wallet" />
+                <ErrorDialog
+                    error={error}
+                    onClose={() => setDialogIsOpen(false)}
+                    title="Unconnectable wallet"
+                />
             ) : null}
         </>
     );

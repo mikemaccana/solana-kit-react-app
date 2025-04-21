@@ -31,7 +31,7 @@ export function SignInMenuItem({ onSignIn, onError, wallet }: Props) {
                 onError(e);
             }
         },
-        [signIn, onSignIn, onError],
+        [signIn, onSignIn, onError]
     );
     return (
         <DropdownMenu.Item onClick={handleSignInClick}>

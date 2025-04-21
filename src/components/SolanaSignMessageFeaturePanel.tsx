@@ -26,7 +26,7 @@ export function SolanaSignMessageFeaturePanel({ account }: Props) {
             }
             return signature as ReadonlyUint8Array;
         },
-        [account.address, messageSigner],
+        [account.address, messageSigner]
     );
     return <BaseSignMessageFeaturePanel signMessage={signMessage} />;
 }

@@ -26,7 +26,11 @@ export function ConnectWalletMenuItem({ onAccountSelect, onDisconnect, onError, 
             const nextAccounts = await connect();
             // Try to choose the first never-before-seen account.
             for (const nextAccount of nextAccounts) {
-                if (!existingAccounts.some(existingAccount => uiWalletAccountsAreSame(nextAccount, existingAccount))) {
+                if (
+                    !existingAccounts.some((existingAccount) =>
+                        uiWalletAccountsAreSame(nextAccount, existingAccount)
+                    )
+                ) {
                     onAccountSelect(nextAccount);
                     return;
                 }
@@ -62,7 +66,7 @@ export function ConnectWalletMenuItem({ onAccountSelect, onDisconnect, onError, 
             <DropdownMenu.SubContent>
                 <DropdownMenu.Label>Accounts</DropdownMenu.Label>
                 <DropdownMenu.RadioGroup value={selectedWalletAccount?.address}>
-                    {wallet.accounts.map(account => (
+                    {wallet.accounts.map((account) => (
                         <DropdownMenu.RadioItem
                             key={account.address}
                             value={account.address}
@@ -76,7 +80,7 @@ export function ConnectWalletMenuItem({ onAccountSelect, onDisconnect, onError, 
                 </DropdownMenu.RadioGroup>
                 <DropdownMenu.Separator />
                 <DropdownMenu.Item
-                    onSelect={async e => {
+                    onSelect={async (e) => {
                         e.preventDefault();
                         await handleConnectClick();
                     }}
@@ -85,7 +89,7 @@ export function ConnectWalletMenuItem({ onAccountSelect, onDisconnect, onError, 
                 </DropdownMenu.Item>
                 <DropdownMenu.Item
                     color="red"
-                    onSelect={async e => {
+                    onSelect={async (e) => {
                         e.preventDefault();
                         try {
                             await disconnect();

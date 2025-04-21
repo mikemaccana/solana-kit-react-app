@@ -10,13 +10,20 @@ import React from 'react';
 export const NO_ERROR = Symbol();
 
 export function getErrorMessage(err: unknown, fallbackMessage: React.ReactNode): React.ReactNode {
-    if (isWalletStandardError(err, WALLET_STANDARD_ERROR__FEATURES__WALLET_ACCOUNT_FEATURE_UNIMPLEMENTED)) {
+    if (
+        isWalletStandardError(
+            err,
+            WALLET_STANDARD_ERROR__FEATURES__WALLET_ACCOUNT_FEATURE_UNIMPLEMENTED
+        )
+    ) {
         return (
             <>
                 This account does not support the <Code>{err.context.featureName}</Code> feature
             </>
         );
-    } else if (isWalletStandardError(err, WALLET_STANDARD_ERROR__FEATURES__WALLET_FEATURE_UNIMPLEMENTED)) {
+    } else if (
+        isWalletStandardError(err, WALLET_STANDARD_ERROR__FEATURES__WALLET_FEATURE_UNIMPLEMENTED)
+    ) {
         return (
             <Flex direction="column" gap="4">
                 <Text as="p">
@@ -32,7 +39,7 @@ export function getErrorMessage(err: unknown, fallbackMessage: React.ReactNode):
                 <Text as="p" trim="end">
                     Features supported:
                     <ul>
-                        {err.context.supportedFeatures.sort().map(featureName => (
+                        {err.context.supportedFeatures.sort().map((featureName) => (
                             <li key={featureName}>
                                 <Code>{featureName}</Code>
                             </li>
@@ -41,7 +48,12 @@ export function getErrorMessage(err: unknown, fallbackMessage: React.ReactNode):
                 </Text>
             </Flex>
         );
-    } else if (isWalletStandardError(err, WALLET_STANDARD_ERROR__FEATURES__WALLET_ACCOUNT_CHAIN_UNSUPPORTED)) {
+    } else if (
+        isWalletStandardError(
+            err,
+            WALLET_STANDARD_ERROR__FEATURES__WALLET_ACCOUNT_CHAIN_UNSUPPORTED
+        )
+    ) {
         return (
             <Flex direction="column" gap="4">
                 <Text as="p">
@@ -50,7 +62,7 @@ export function getErrorMessage(err: unknown, fallbackMessage: React.ReactNode):
                 <Text as="p" trim="end">
                     Chains supported:
                     <ul>
-                        {err.context.supportedChains.sort().map(chain => (
+                        {err.context.supportedChains.sort().map((chain) => (
                             <li key={chain}>
                                 <Code>{chain}</Code>
                             </li>

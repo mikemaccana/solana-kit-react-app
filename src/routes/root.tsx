@@ -25,7 +25,11 @@ function Root() {
                 <Flex gap="6" direction="column">
                     <Flex gap="2">
                         <Flex align="center" gap="3" flexGrow="1">
-                            <WalletAccountIcon account={selectedWalletAccount} height="48" width="48" />
+                            <WalletAccountIcon
+                                account={selectedWalletAccount}
+                                height="48"
+                                width="48"
+                            />
                             <Box>
                                 <Heading as="h4" size="3">
                                     {selectedWalletAccount.label ?? 'Unlabeled Account'}
@@ -63,7 +67,9 @@ function Root() {
                                 FallbackComponent={FeatureNotSupportedCallout}
                                 resetKeys={errorBoundaryResetKeys}
                             >
-                                <SolanaSignAndSendTransactionFeaturePanel account={selectedWalletAccount} />
+                                <SolanaSignAndSendTransactionFeaturePanel
+                                    account={selectedWalletAccount}
+                                />
                             </ErrorBoundary>
                         </FeaturePanel>
                     </DataList.Root>

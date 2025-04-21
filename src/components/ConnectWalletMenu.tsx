@@ -19,22 +19,29 @@ type Props = Readonly<{
 export function ConnectWalletMenu({ children }: Props) {
     const { current: NO_ERROR } = useRef(Symbol());
     const wallets = useWallets();
-    const [selectedWalletAccount, setSelectedWalletAccount] = useContext(SelectedWalletAccountContext);
+    const [selectedWalletAccount, setSelectedWalletAccount] = useContext(
+        SelectedWalletAccountContext
+    );
     const [error, setError] = useState(NO_ERROR);
     const [forceClose, setForceClose] = useState(false);
     function renderItem(wallet: UiWallet) {
         return (
             <ErrorBoundary
-                fallbackRender={({ error }) => <UnconnectableWalletMenuItem error={error} wallet={wallet} />}
+                fallbackRender={({ error }) => (
+                    <UnconnectableWalletMenuItem error={error} wallet={wallet} />
+                )}
                 key={`wallet:${wallet.name}`}
             >
                 <ConnectWalletMenuItem
-                    onAccountSelect={account => {
+                    onAccountSelect={(account) => {
                         setSelectedWalletAccount(account);
                         setForceClose(true);
                     }}
-                    onDisconnect={wallet => {
-                        if (selectedWalletAccount && uiWalletAccountBelongsToUiWallet(selectedWalletAccount, wallet)) {
+                    onDisconnect={(wallet) => {
+                        if (
+                            selectedWalletAccount &&
+                            uiWalletAccountBelongsToUiWallet(selectedWalletAccount, wallet)
+                        ) {
                             setSelectedWalletAccount(undefined);
                         }
                     }}
@@ -47,7 +54,10 @@ export function ConnectWalletMenu({ children }: Props) {
     const walletsThatSupportStandardConnect = [];
     const unconnectableWallets = [];
     for (const wallet of wallets) {
-        if (wallet.features.includes(StandardConnect) && wallet.features.includes(StandardDisconnect)) {
+        if (
+            wallet.features.includes(StandardConnect) &&
+            wallet.features.includes(StandardDisconnect)
+        ) {
             walletsThatSupportStandardConnect.push(wallet);
         } else {
             unconnectableWallets.push(wallet);
@@ -55,12 +65,19 @@ export function ConnectWalletMenu({ children }: Props) {
     }
     return (
         <>
-            <DropdownMenu.Root open={forceClose ? false : undefined} onOpenChange={setForceClose.bind(null, false)}>
+            <DropdownMenu.Root
+                open={forceClose ? false : undefined}
+                onOpenChange={setForceClose.bind(null, false)}
+            >
                 <DropdownMenu.Trigger>
                     <Button>
                         {selectedWalletAccount ? (
                             <>
-                                <WalletAccountIcon account={selectedWalletAccount} width="18" height="18" />
+                                <WalletAccountIcon
+                                    account={selectedWalletAccount}
+                                    width="18"
+                                    height="18"
+                                />
                                 {selectedWalletAccount.address.slice(0, 8)}
                             </>
                         ) : (
@@ -90,7 +107,9 @@ export function ConnectWalletMenu({ children }: Props) {
                     )}
                 </DropdownMenu.Content>
             </DropdownMenu.Root>
-            {error !== NO_ERROR ? <ErrorDialog error={error} onClose={() => setError(NO_ERROR)} /> : null}
+            {error !== NO_ERROR ? (
+                <ErrorDialog error={error} onClose={() => setError(NO_ERROR)} />
+            ) : null}
         </>
     );
 }

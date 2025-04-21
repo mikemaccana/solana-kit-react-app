@@ -8,7 +8,10 @@ import {
 } from '@wallet-standard/react';
 import { useEffect, useMemo, useState } from 'react';
 
-import { SelectedWalletAccountContext, SelectedWalletAccountState } from './SelectedWalletAccountContext';
+import {
+    SelectedWalletAccountContext,
+    SelectedWalletAccountState,
+} from './SelectedWalletAccountContext';
 
 const STORAGE_KEY = 'solana-wallet-standard-example-react:selected-wallet-and-address';
 
@@ -45,17 +48,20 @@ function getSavedWalletAccount(wallets: readonly UiWallet[]): UiWalletAccount | 
  */
 export function SelectedWalletAccountContextProvider({ children }: { children: React.ReactNode }) {
     const wallets = useWallets();
-    const [selectedWalletAccount, setSelectedWalletAccountInternal] = useState<SelectedWalletAccountState>(() =>
-        getSavedWalletAccount(wallets),
-    );
+    const [selectedWalletAccount, setSelectedWalletAccountInternal] =
+        useState<SelectedWalletAccountState>(() => getSavedWalletAccount(wallets));
     const setSelectedWalletAccount: React.Dispatch<
         React.SetStateAction<SelectedWalletAccountState>
-    > = setStateAction => {
-        setSelectedWalletAccountInternal(prevSelectedWalletAccount => {
+    > = (setStateAction) => {
+        setSelectedWalletAccountInternal((prevSelectedWalletAccount) => {
             wasSetterInvoked = true;
             const nextWalletAccount =
-                typeof setStateAction === 'function' ? setStateAction(prevSelectedWalletAccount) : setStateAction;
-            const accountKey = nextWalletAccount ? getUiWalletAccountStorageKey(nextWalletAccount) : undefined;
+                typeof setStateAction === 'function'
+                    ? setStateAction(prevSelectedWalletAccount)
+                    : setStateAction;
+            const accountKey = nextWalletAccount
+                ? getUiWalletAccountStorageKey(nextWalletAccount)
+                : undefined;
             if (accountKey) {
                 localStorage.setItem(STORAGE_KEY, accountKey);
             } else {
@@ -78,7 +84,10 @@ export function SelectedWalletAccountContextProvider({ children }: { children: R
                         return uiWalletAccount;
                     }
                 }
-                if (uiWalletAccountBelongsToUiWallet(selectedWalletAccount, uiWallet) && uiWallet.accounts[0]) {
+                if (
+                    uiWalletAccountBelongsToUiWallet(selectedWalletAccount, uiWallet) &&
+                    uiWallet.accounts[0]
+                ) {
                     // If the selected account belongs to this connected wallet, at least, then
                     // select one of its accounts.
                     return uiWallet.accounts[0];

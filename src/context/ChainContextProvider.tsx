@@ -48,7 +48,7 @@ export function ChainContextProvider({ children }: { children: React.ReactNode }
                         setChain(chain);
                     },
                 }),
-                [contextValue],
+                [contextValue]
             )}
         >
             {children}

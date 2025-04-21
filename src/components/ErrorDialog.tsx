@@ -14,7 +14,7 @@ export function ErrorDialog({ error, onClose, title }: Props) {
     return (
         <AlertDialog.Root
             open={isOpen}
-            onOpenChange={open => {
+            onOpenChange={(open) => {
                 if (!open) {
                     if (!onClose || onClose() !== false) {
                         setIsOpen(false);
@@ -23,7 +23,9 @@ export function ErrorDialog({ error, onClose, title }: Props) {
             }}
         >
             <AlertDialog.Content>
-                <AlertDialog.Title color="red">{title ?? 'We encountered the following error'}</AlertDialog.Title>
+                <AlertDialog.Title color="red">
+                    {title ?? 'We encountered the following error'}
+                </AlertDialog.Title>
                 <AlertDialog.Description>
                     <Blockquote>{getErrorMessage(error, 'Unknown')}</Blockquote>
                 </AlertDialog.Description>

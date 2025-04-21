@@ -24,11 +24,13 @@ export function SignInMenu({ children }: Props) {
     function renderItem(wallet: UiWallet) {
         return (
             <ErrorBoundary
-                fallbackRender={({ error }) => <UnconnectableWalletMenuItem error={error} wallet={wallet} />}
+                fallbackRender={({ error }) => (
+                    <UnconnectableWalletMenuItem error={error} wallet={wallet} />
+                )}
                 key={`wallet:${wallet.name}`}
             >
                 <SignInMenuItem
-                    onSignIn={account => {
+                    onSignIn={(account) => {
                         setSelectedWalletAccount(account);
                         setForceClose(true);
                     }}
@@ -46,7 +48,10 @@ export function SignInMenu({ children }: Props) {
     }
     return (
         <>
-            <DropdownMenu.Root open={forceClose ? false : undefined} onOpenChange={setForceClose.bind(null, false)}>
+            <DropdownMenu.Root
+                open={forceClose ? false : undefined}
+                onOpenChange={setForceClose.bind(null, false)}
+            >
                 <DropdownMenu.Trigger>
                     <Button>
                         {children}
@@ -61,7 +66,10 @@ export function SignInMenu({ children }: Props) {
                             </Callout.Icon>
                             <Callout.Text>
                                 This browser has no wallets installed that support{' '}
-                                <a href="https://phantom.app/learn/developers/sign-in-with-solana" target="_blank">
+                                <a
+                                    href="https://phantom.app/learn/developers/sign-in-with-solana"
+                                    target="_blank"
+                                >
                                     Sign In With Solana
                                 </a>
                                 .
@@ -72,7 +80,9 @@ export function SignInMenu({ children }: Props) {
                     )}
                 </DropdownMenu.Content>
             </DropdownMenu.Root>
-            {error !== NO_ERROR ? <ErrorDialog error={error} onClose={() => setError(NO_ERROR)} /> : null}
+            {error !== NO_ERROR ? (
+                <ErrorDialog error={error} onClose={() => setError(NO_ERROR)} />
+            ) : null}
         </>
     );
 }

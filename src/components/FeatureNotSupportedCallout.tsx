@@ -13,11 +13,18 @@ export function FeatureNotSupportedCallout({
     ...rootProps
 }: Props): React.ReactElement<typeof Callout.Root> {
     return (
-        <Callout.Root color="gray" size="1" {...rootProps} style={{ flexGrow: 1, ...rootProps.style }}>
+        <Callout.Root
+            color="gray"
+            size="1"
+            {...rootProps}
+            style={{ flexGrow: 1, ...rootProps.style }}
+        >
             <Callout.Icon>
                 <ExclamationTriangleIcon />
             </Callout.Icon>
-            <Callout.Text>{getErrorMessage(error, 'This account does not support this feature')}</Callout.Text>
+            <Callout.Text>
+                {getErrorMessage(error, 'This account does not support this feature')}
+            </Callout.Text>
         </Callout.Root>
     );
 }

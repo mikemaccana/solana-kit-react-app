@@ -9,14 +9,14 @@ try {
 
 function guard<TArgs extends unknown[], TReturn, TFallbackReturn>(
     fn: (...args: TArgs) => TReturn,
-    fallbackReturn: TFallbackReturn,
+    fallbackReturn: TFallbackReturn
 ): (...args: TArgs) => TFallbackReturn | TReturn;
 function guard<TArgs extends unknown[], TReturn>(
-    fn: (...args: TArgs) => TReturn,
+    fn: (...args: TArgs) => TReturn
 ): (...args: TArgs) => TReturn | undefined;
 function guard<TArgs extends unknown[], TReturn, TFallbackReturn>(
     fn: (...args: TArgs) => TReturn,
-    fallbackReturn?: TFallbackReturn,
+    fallbackReturn?: TFallbackReturn
 ): (...args: TArgs) => TFallbackReturn | TReturn | undefined {
     return (...args) => {
         try {
@@ -29,10 +29,10 @@ function guard<TArgs extends unknown[], TReturn, TFallbackReturn>(
 }
 
 export const localStorage: Pick<Storage, 'getItem' | 'removeItem' | 'setItem'> = {
-    getItem: guard(k => {
+    getItem: guard((k) => {
         return storage?.getItem(k) ?? null;
     }, null),
-    removeItem: guard(k => {
+    removeItem: guard((k) => {
         storage?.removeItem(k);
     }),
     setItem: guard((k, v) => {

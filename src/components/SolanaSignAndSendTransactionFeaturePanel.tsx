@@ -1,4 +1,14 @@
-import { Blockquote, Box, Button, Dialog, Flex, Link, Select, Text, TextField } from '@radix-ui/themes';
+import {
+    Blockquote,
+    Box,
+    Button,
+    Dialog,
+    Flex,
+    Link,
+    Select,
+    Text,
+    TextField,
+} from '@radix-ui/themes';
 import {
     address,
     appendTransactionMessageInstruction,
@@ -13,7 +23,11 @@ import {
 } from '@solana/kit';
 import { useWalletAccountTransactionSendingSigner } from '@solana/react';
 import { getTransferSolInstruction } from '@solana-program/system';
-import { getUiWalletAccountStorageKey, type UiWalletAccount, useWallets } from '@wallet-standard/react';
+import {
+    getUiWalletAccountStorageKey,
+    type UiWalletAccount,
+    useWallets,
+} from '@wallet-standard/react';
 import type { SyntheticEvent } from 'react';
 import { useContext, useId, useMemo, useRef, useState } from 'react';
 import { useSWRConfig } from 'swr';
@@ -45,7 +59,9 @@ export function SolanaSignAndSendTransactionFeaturePanel({ account }: Props) {
     const [error, setError] = useState(NO_ERROR);
     const [lastSignature, setLastSignature] = useState<Uint8Array | undefined>();
     const [solQuantityString, setSolQuantityString] = useState<string>('');
-    const [recipientAccountStorageKey, setRecipientAccountStorageKey] = useState<string | undefined>();
+    const [recipientAccountStorageKey, setRecipientAccountStorageKey] = useState<
+        string | undefined
+    >();
     const recipientAccount = useMemo(() => {
         if (recipientAccountStorageKey) {
             for (const wallet of wallets) {
@@ -58,13 +74,21 @@ export function SolanaSignAndSendTransactionFeaturePanel({ account }: Props) {
         }
     }, [recipientAccountStorageKey, wallets]);
     const { chain: currentChain, solanaExplorerClusterName } = useContext(ChainContext);
-    const transactionSendingSigner = useWalletAccountTransactionSendingSigner(account, currentChain);
+    const transactionSendingSigner = useWalletAccountTransactionSendingSigner(
+        account,
+        currentChain
+    );
     const lamportsInputId = useId();
     const recipientSelectId = useId();
     return (
-        <Flex asChild gap="2" direction={{ initial: 'column', sm: 'row' }} style={{ width: '100%' }}>
+        <Flex
+            asChild
+            gap="2"
+            direction={{ initial: 'column', sm: 'row' }}
+            style={{ width: '100%' }}
+        >
             <form
-                onSubmit={async e => {
+                onSubmit={async (e) => {
                     e.preventDefault();
                     setError(NO_ERROR);
                     setIsSendingTransaction(true);
@@ -78,21 +102,24 @@ export function SolanaSignAndSendTransactionFeaturePanel({ account }: Props) {
                             .send();
                         const message = pipe(
                             createTransactionMessage({ version: 0 }),
-                            m => setTransactionMessageFeePayerSigner(transactionSendingSigner, m),
-                            m => setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, m),
-                            m =>
+                            (m) => setTransactionMessageFeePayerSigner(transactionSendingSigner, m),
+                            (m) => setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, m),
+                            (m) =>
                                 appendTransactionMessageInstruction(
                                     getTransferSolInstruction({
                                         amount,
                                         destination: address(recipientAccount.address),
                                         source: transactionSendingSigner,
                                     }),
-                                    m,
-                                ),
+                                    m
+                                )
                         );
                         assertIsTransactionMessageWithSingleSendingSigner(message);
                         const signature = await signAndSendTransactionMessageWithSigners(message);
-                        void mutate({ address: transactionSendingSigner.address, chain: currentChain });
+                        void mutate({
+                            address: transactionSendingSigner.address,
+                            chain: currentChain,
+                        });
                         void mutate({ address: recipientAccount.address, chain: currentChain });
                         setLastSignature(signature);
                         setSolQuantityString('');
@@ -122,24 +149,33 @@ export function SolanaSignAndSendTransactionFeaturePanel({ account }: Props) {
                             </TextField.Root>
                         </Box>
                         <Box flexShrink="0">
-                            <Text as="label" color="gray" htmlFor={recipientSelectId} weight="medium">
+                            <Text
+                                as="label"
+                                color="gray"
+                                htmlFor={recipientSelectId}
+                                weight="medium"
+                            >
                                 To Account
                             </Text>
                         </Box>
                         <Select.Root
                             disabled={isSendingTransaction}
                             onValueChange={setRecipientAccountStorageKey}
-                            value={recipientAccount ? getUiWalletAccountStorageKey(recipientAccount) : undefined}
+                            value={
+                                recipientAccount
+                                    ? getUiWalletAccountStorageKey(recipientAccount)
+                                    : undefined
+                            }
                         >
                             <Select.Trigger
                                 style={{ flexGrow: 1, flexShrink: 1, overflow: 'hidden' }}
                                 placeholder="Select a Connected Account"
                             />
                             <Select.Content>
-                                {wallets.flatMap(wallet =>
+                                {wallets.flatMap((wallet) =>
                                     wallet.accounts
                                         .filter(({ chains }) => chains.includes(currentChain))
-                                        .map(account => {
+                                        .map((account) => {
                                             const key = getUiWalletAccountStorageKey(account);
                                             return (
                                                 <Select.Item key={key} value={key}>
@@ -148,7 +184,7 @@ export function SolanaSignAndSendTransactionFeaturePanel({ account }: Props) {
                                                     </WalletMenuItemContent>
                                                 </Select.Item>
                                             );
-                                        }),
+                                        })
                                 )}
                             </Select.Content>
                         </Select.Root>
@@ -156,7 +192,7 @@ export function SolanaSignAndSendTransactionFeaturePanel({ account }: Props) {
                 </Box>
                 <Dialog.Root
                     open={!!lastSignature}
-                    onOpenChange={open => {
+                    onOpenChange={(open) => {
                         if (!open) {
                             setLastSignature(undefined);
                         }
@@ -174,7 +210,7 @@ export function SolanaSignAndSendTransactionFeaturePanel({ account }: Props) {
                     </Dialog.Trigger>
                     {lastSignature ? (
                         <Dialog.Content
-                            onClick={e => {
+                            onClick={(e) => {
                                 e.stopPropagation();
                             }}
                         >
@@ -185,7 +221,7 @@ export function SolanaSignAndSendTransactionFeaturePanel({ account }: Props) {
                                 <Text>
                                     <Link
                                         href={`https://explorer.solana.com/tx/${getBase58Decoder().decode(
-                                            lastSignature,
+                                            lastSignature
                                         )}?cluster=${solanaExplorerClusterName}`}
                                         target="_blank"
                                     >
@@ -203,7 +239,11 @@ export function SolanaSignAndSendTransactionFeaturePanel({ account }: Props) {
                     ) : null}
                 </Dialog.Root>
                 {error !== NO_ERROR ? (
-                    <ErrorDialog error={error} onClose={() => setError(NO_ERROR)} title="Transfer failed" />
+                    <ErrorDialog
+                        error={error}
+                        onClose={() => setError(NO_ERROR)}
+                        title="Transfer failed"
+                    />
                 ) : null}
             </form>
         </Flex>

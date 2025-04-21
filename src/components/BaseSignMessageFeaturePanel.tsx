@@ -18,9 +18,14 @@ export function BaseSignMessageFeaturePanel({ signMessage }: Props) {
     const [lastSignature, setLastSignature] = useState<ReadonlyUint8Array | undefined>();
     const [text, setText] = useState<string>();
     return (
-        <Flex asChild gap="2" direction={{ initial: 'column', sm: 'row' }} style={{ width: '100%' }}>
+        <Flex
+            asChild
+            gap="2"
+            direction={{ initial: 'column', sm: 'row' }}
+            style={{ width: '100%' }}
+        >
             <form
-                onSubmit={async e => {
+                onSubmit={async (e) => {
                     e.preventDefault();
                     setError(NO_ERROR);
                     setIsSigningMessage(true);
@@ -38,7 +43,9 @@ export function BaseSignMessageFeaturePanel({ signMessage }: Props) {
                 <Box flexGrow="1">
                     <TextField.Root
                         placeholder="Write a message to sign"
-                        onChange={(e: SyntheticEvent<HTMLInputElement>) => setText(e.currentTarget.value)}
+                        onChange={(e: SyntheticEvent<HTMLInputElement>) =>
+                            setText(e.currentTarget.value)
+                        }
                         value={text}
                     >
                         <TextField.Slot>
@@ -48,7 +55,7 @@ export function BaseSignMessageFeaturePanel({ signMessage }: Props) {
                 </Box>
                 <Dialog.Root
                     open={!!lastSignature}
-                    onOpenChange={open => {
+                    onOpenChange={(open) => {
                         if (!open) {
                             setLastSignature(undefined);
                         }
@@ -66,7 +73,7 @@ export function BaseSignMessageFeaturePanel({ signMessage }: Props) {
                     </Dialog.Trigger>
                     {lastSignature ? (
                         <Dialog.Content
-                            onClick={e => {
+                            onClick={(e) => {
                                 e.stopPropagation();
                             }}
                         >
@@ -81,7 +88,9 @@ export function BaseSignMessageFeaturePanel({ signMessage }: Props) {
                                 <DataList.Item>
                                     <DataList.Label minWidth="88px">Signature</DataList.Label>
                                     <DataList.Value>
-                                        <Code truncate>{getBase64Decoder().decode(lastSignature)}</Code>
+                                        <Code truncate>
+                                            {getBase64Decoder().decode(lastSignature)}
+                                        </Code>
                                     </DataList.Value>
                                 </DataList.Item>
                             </DataList.Root>
@@ -94,7 +103,11 @@ export function BaseSignMessageFeaturePanel({ signMessage }: Props) {
                     ) : null}
                 </Dialog.Root>
                 {error !== NO_ERROR ? (
-                    <ErrorDialog error={error} onClose={() => setError(NO_ERROR)} title="Failed to sign message" />
+                    <ErrorDialog
+                        error={error}
+                        onClose={() => setError(NO_ERROR)}
+                        title="Failed to sign message"
+                    />
                 ) : null}
             </form>
         </Flex>

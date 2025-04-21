@@ -29,5 +29,5 @@ root.render(
                 </SelectedWalletAccountContextProvider>
             </ChainContextProvider>
         </Theme>
-    </StrictMode>,
+    </StrictMode>
 );

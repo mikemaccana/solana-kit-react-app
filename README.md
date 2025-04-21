@@ -6,7 +6,7 @@ It allows you to connect a React app to a Solana wallet. It replace wallet adapt
 
 It is based on `@solana/example-react-app` wuth the following changes:
 
-- Turned into a working standalone example repository using `npm` with all pnpm, lerna, and turbopack customization removed.
+- Turned into a working standalone example repository using `npm` with all custom tools removed (no pnpm, no lerna, no turbopack, no custom eslint config).
 - Security warnings fixed.
 
 ## Features
@@ -22,7 +22,6 @@ Start a server in development mode.
 
 ```shell
 npm install
-npm run compile:js compile:typedefs
 npm run dev
 ```
 

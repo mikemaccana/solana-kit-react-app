@@ -20,8 +20,14 @@ const seenErrors = new WeakSet();
 export function Balance({ account }: Props) {
     const { chain } = useContext(ChainContext);
     const { rpc, rpcSubscriptions } = useContext(RpcContext);
-    const subscribe = useMemo(() => balanceSubscribe.bind(null, rpc, rpcSubscriptions), [rpc, rpcSubscriptions]);
-    const { data: lamports, error } = useSWRSubscription({ address: address(account.address), chain }, subscribe);
+    const subscribe = useMemo(
+        () => balanceSubscribe.bind(null, rpc, rpcSubscriptions),
+        [rpc, rpcSubscriptions]
+    );
+    const { data: lamports, error } = useSWRSubscription(
+        { address: address(account.address), chain },
+        subscribe
+    );
     if (error && !seenErrors.has(error)) {
         return (
             <>
@@ -34,7 +40,11 @@ export function Balance({ account }: Props) {
                     title="Failed to fetch account balance"
                 />
                 <Text>
-                    <Tooltip content={<>Could not fetch balance: {getErrorMessage(error, 'Unknown reason')}</>}>
+                    <Tooltip
+                        content={
+                            <>Could not fetch balance: {getErrorMessage(error, 'Unknown reason')}</>
+                        }
+                    >
                         <ExclamationTriangleIcon
                             color="red"
                             style={{ height: 16, verticalAlign: 'text-bottom', width: 16 }}
@@ -46,9 +56,11 @@ export function Balance({ account }: Props) {
     } else if (lamports == null) {
         return <Text>&ndash;</Text>;
     } else {
-        const formattedSolValue = new Intl.NumberFormat(undefined, { maximumFractionDigits: 5 }).format(
+        const formattedSolValue = new Intl.NumberFormat(undefined, {
+            maximumFractionDigits: 5,
+        }).format(
             // @ts-expect-error This format string is 100% allowed now.
-            `${lamports}E-9`,
+            `${lamports}E-9`
         );
         return <Text>{`${formattedSolValue} \u25CE`}</Text>;
     }

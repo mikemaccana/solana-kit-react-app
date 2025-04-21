@@ -32,7 +32,7 @@ export function Nav() {
                                 <DropdownMenu.Trigger>{currentChainBadge}</DropdownMenu.Trigger>
                                 <DropdownMenu.Content>
                                     <DropdownMenu.RadioGroup
-                                        onValueChange={value => {
+                                        onValueChange={(value) => {
                                             setChain(value as 'solana:${string}');
                                         }}
                                         value={chain}
@@ -42,8 +42,12 @@ export function Nav() {
                                                 Mainnet Beta
                                             </DropdownMenu.RadioItem>
                                         ) : null}
-                                        <DropdownMenu.RadioItem value="solana:devnet">Devnet</DropdownMenu.RadioItem>
-                                        <DropdownMenu.RadioItem value="solana:testnet">Testnet</DropdownMenu.RadioItem>
+                                        <DropdownMenu.RadioItem value="solana:devnet">
+                                            Devnet
+                                        </DropdownMenu.RadioItem>
+                                        <DropdownMenu.RadioItem value="solana:testnet">
+                                            Testnet
+                                        </DropdownMenu.RadioItem>
                                     </DropdownMenu.RadioGroup>
                                 </DropdownMenu.Content>
                             </DropdownMenu.Root>

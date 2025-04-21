@@ -1,4 +1,11 @@
-import { AccountNotificationsApi, Address, GetBalanceApi, Lamports, Rpc, RpcSubscriptions } from '@solana/kit';
+import {
+    AccountNotificationsApi,
+    Address,
+    GetBalanceApi,
+    Lamports,
+    Rpc,
+    RpcSubscriptions,
+} from '@solana/kit';
 import { SWRSubscription } from 'swr/subscription';
 
 const EXPLICIT_ABORT_TOKEN = Symbol();
@@ -34,7 +41,7 @@ export function balanceSubscribe(
             lastUpdateSlot = slot;
             next(null /* err */, lamports /* data */);
         })
-        .catch(e => {
+        .catch((e) => {
             if (e !== EXPLICIT_ABORT_TOKEN) {
                 next(e /* err */);
             }
@@ -43,7 +50,7 @@ export function balanceSubscribe(
     rpcSubscriptions
         .accountNotifications(address)
         .subscribe({ abortSignal: abortController.signal })
-        .then(async accountInfoNotifications => {
+        .then(async (accountInfoNotifications) => {
             try {
                 for await (const {
                     context: { slot },
@@ -61,7 +68,7 @@ export function balanceSubscribe(
                 next(e /* err */);
             }
         })
-        .catch(e => {
+        .catch((e) => {
             if (e !== EXPLICIT_ABORT_TOKEN) {
                 next(e /* err */);
             }

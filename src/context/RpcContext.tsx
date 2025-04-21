@@ -1,4 +1,9 @@
-import type { Rpc, RpcSubscriptions, SolanaRpcApiMainnet, SolanaRpcSubscriptionsApi } from '@solana/kit';
+import type {
+    Rpc,
+    RpcSubscriptions,
+    SolanaRpcApiMainnet,
+    SolanaRpcSubscriptionsApi,
+} from '@solana/kit';
 import { createSolanaRpc, createSolanaRpcSubscriptions, devnet } from '@solana/kit';
 import { createContext } from 'react';
 
